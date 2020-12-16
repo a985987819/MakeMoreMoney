@@ -3,7 +3,7 @@
         {{markList}}
         <NumberPad :value.sync="mark.sum" @submit="savemark"/>
         <Types :value.sync="mark.type"/>
-        <Notes @update:value="onupdateNotes"/>
+        <Notes @update:value="onupdateNotes" field-name="备注" placeholder="在这里备注"/>
         <Tags :data-source.sync='tags' @update:value="onupdateTags"/>
     </Layout>
 </template>
