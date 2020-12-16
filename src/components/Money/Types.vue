@@ -15,12 +15,13 @@
     //作用：把TS视为组件，会自动把它分类为data和methods
 
     export default class Types extends Vue {
-        @Prop()  value!: string;
+        @Prop() value!: string;
+
         selectType(type: string) {
             if (type !== '-' && type !== '+') {
                 throw new Error('type is unknown');
             }
-            this.$emit('update:value',type)
+            this.$emit('update:value', type);
         }
     }
 </script>

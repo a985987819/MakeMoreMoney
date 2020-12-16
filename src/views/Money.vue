@@ -1,7 +1,7 @@
 <template>
     <Layout class-prefix="layout">
-        {{mark}}
-        <NumberPad @update:value="onupdateSum"/>
+        {{markList}}
+        <NumberPad :value.sync="mark.sum" @submit="savemark"/>
         <Types :value.sync="mark.type"/>
         <Notes @update:value="onupdateNotes"/>
         <Tags :data-source.sync='tags' @update:value="onupdateTags"/>
@@ -15,15 +15,24 @@
     import Types from '@/components/Money/Types.vue';
     import Notes from '@/components/Money/Notes.vue';
     import Tags from '@/components/Money/Tags.vue';
-    import {Component} from 'vue-property-decorator';
+    import {Component, Watch} from 'vue-property-decorator';
+    import {model} from '@/model';
 
 
-    type Mark = {
-        tags: string[];
-        notes: string;
-        type: string;
-        sum: number;
+    const version = window.localStorage.getItem('version') || '';
+    const markList= model.fetch();
+    // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
+    if (version < '0.0.2') {
+        if (version === '0.0.1') {
+            //数据库升级，数据迁移
+            markList.forEach(mark => {
+                mark.createdAt = new Date(2020, 1, 1);
+            });
+            //保存数据
+            window.localStorage.setItem('markList', JSON.stringify(markList));
+        }
     }
+    window.localStorage.setItem('version', '0.0.2');
 
 
     @Component({
@@ -37,18 +46,34 @@
             type: '-',
             sum: 0,
         };
+        markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
 
 
         onupdateTags(value: string[]) {
             this.mark.tags = value;
+            console.log('现在的标签是' + this.mark.tags);
         }
 
         onupdateNotes(value: string) {
             this.mark.notes = value;
+            console.log('这里的标签为' + this.mark.notes);
         }
 
         onupdateSum(value: string) {
             this.mark.sum = parseFloat(value);
+        }
+
+        savemark() {
+            const mark2: Mark = model.clone(this.mark);
+            mark2.createdAt = new Date();
+            this.markList.push(mark2);
+            console.log(mark2.sum);
+            console.log(this.markList);
+        }
+
+        @Watch('markList')
+        onMarkListChange() {
+            model.save(this.markList);
         }
     }
 </script>
