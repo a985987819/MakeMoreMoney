@@ -1,5 +1,5 @@
 const localStorageName = 'markList';
-const model = {
+const markListModel = {
     clone(data:Mark[] | Mark){
         return JSON.parse(JSON.stringify(data))
     },
@@ -11,4 +11,4 @@ const model = {
     }
 };
 
-export {model};
+export {markListModel};

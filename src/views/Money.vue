@@ -16,11 +16,13 @@
     import Notes from '@/components/Money/Notes.vue';
     import Tags from '@/components/Money/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
-    import {model} from '@/model';
+    import {markListModel} from '@/models/markListModel';
+    import {tagListModel} from '@/models/tagListModel';
 
 
     const version = window.localStorage.getItem('version') || '';
-    const markList= model.fetch();
+    const markList= markListModel.fetch();
+    const tagList= tagListModel.fetch();
     // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
     if (version < '0.0.2') {
         if (version === '0.0.1') {
@@ -39,7 +41,7 @@
         components: {Tags, Notes, Types, NumberPad}
     })
     export default class Money extends Vue {
-        tags = ['衣', '食', '住', '行'];
+        tags = tagList
         mark: Mark = {
             tags: [],
             notes: '',
@@ -64,7 +66,7 @@
         }
 
         savemark() {
-            const mark2: Mark = model.clone(this.mark);
+            const mark2: Mark = markListModel.clone(this.mark);
             mark2.createdAt = new Date();
             this.markList.push(mark2);
             console.log(mark2.sum);
@@ -73,7 +75,7 @@
 
         @Watch('markList')
         onMarkListChange() {
-            model.save(this.markList);
+            markListModel.save(this.markList);
         }
     }
 </script>
