@@ -3,7 +3,9 @@
         {{markList}}
         <NumberPad :value.sync="mark.sum" @submit="savemark"/>
         <Types :value.sync="mark.type"/>
-        <Notes @update:value="onupdateNotes" field-name="备注" placeholder="在这里备注"/>
+        <div class="notes">
+            <FormItem @update:value="onupdateNotes" field-name="备注" placeholder="在这里备注"/>
+        </div>
         <Tags :data-source.sync='tags' @update:value="onupdateTags"/>
     </Layout>
 </template>
@@ -13,7 +15,7 @@
     import Vue from 'vue';
     import NumberPad from '@/components/Money/NumberPad.vue';
     import Types from '@/components/Money/Types.vue';
-    import Notes from '@/components/Money/Notes.vue';
+    import FormItem from '@/components/Money/FormItem.vue';
     import Tags from '@/components/Money/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
     import {markListModel} from '@/models/markListModel';
@@ -21,8 +23,8 @@
 
 
     const version = window.localStorage.getItem('version') || '';
-    const markList= markListModel.fetch();
-    const tagList= tagListModel.fetch();
+    const markList = markListModel.fetch();
+    const tagList = tagListModel.fetch();
     // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
     if (version < '0.0.2') {
         if (version === '0.0.1') {
@@ -38,10 +40,10 @@
 
 
     @Component({
-        components: {Tags, Notes, Types, NumberPad}
+        components: {FormItem, Tags, Types, NumberPad}
     })
     export default class Money extends Vue {
-        tags = tagList
+        tags = tagList;
         mark: Mark = {
             tags: [],
             notes: '',
@@ -83,6 +85,9 @@
     .layout-content {
         display: flex;
         flex-direction: column-reverse;
+    }
+    .notes{
+        padding: 12px 0;
     }
 </style>
 
