@@ -60,7 +60,6 @@
 
         onupdateNotes(value: string) {
             this.mark.notes = value;
-            console.log('这里的标签为' + this.mark.notes);
         }
 
         onupdateSum(value: string) {
