@@ -24,7 +24,6 @@
 
     const version = window.localStorage.getItem('version') || '';
     const markList = markListModel.fetch();
-    const tagList = tagListModel.fetch();
     // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
     if (version < '0.0.2') {
         if (version === '0.0.1') {
@@ -43,7 +42,7 @@
         components: {FormItem, Tags, Types, NumberPad}
     })
     export default class Money extends Vue {
-        tags = tagList;
+        tags = window.tagList
         mark: Mark = {
             tags: [],
             notes: '',
