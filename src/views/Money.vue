@@ -67,16 +67,12 @@
         }
 
         savemark() {
-            const mark2: Mark = markListModel.clone(this.mark);
-            mark2.createdAt = new Date();
-            this.markList.push(mark2);
-            console.log(mark2.sum);
-            console.log(this.markList);
+            markListModel.create(this.mark)
         }
 
         @Watch('markList')
         onMarkListChange() {
-            markListModel.save(this.markList);
+            markListModel.save();
         }
     }
 </script>

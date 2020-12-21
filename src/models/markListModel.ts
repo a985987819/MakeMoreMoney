@@ -1,13 +1,21 @@
+import clone from '@/lib/clone';
+
 const localStorageName = 'markList';
 const markListModel = {
-    clone(data:Mark[] | Mark){
-        return JSON.parse(JSON.stringify(data))
+    data: [] as Mark[],
+
+    create(mark:Mark){
+        const mark2: Mark = clone(mark);
+        mark2.createdAt = new Date();
+        this.data.push(mark2);
     },
     fetch() {
-        return JSON.parse(window.localStorage.getItem(localStorageName) || '[]') as Mark[];
+        this.data = JSON.parse(window.localStorage.getItem(localStorageName) || '[]') as Mark[];
+        return this.data
     },
-    save(data:Mark[]) {
-        window.localStorage.setItem(localStorageName, JSON.stringify(data));
+    save() {
+        window.localStorage.setItem(localStorageName,
+            JSON.stringify(this.data));
     }
 };
 
