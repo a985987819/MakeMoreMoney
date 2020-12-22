@@ -17,25 +17,23 @@
     import Types from '@/components/Money/Types.vue';
     import FormItem from '@/components/Money/FormItem.vue';
     import Tags from '@/components/Money/Tags.vue';
-    import {Component, Watch} from 'vue-property-decorator';
-    import {markListModel} from '@/models/markListModel';
-    import {tagListModel} from '@/models/tagListModel';
+    import {Component} from 'vue-property-decorator';
 
 
-    const version = window.localStorage.getItem('version') || '';
-    const markList = markListModel.fetch();
+    // const version = window.localStorage.getItem('version') || '';
+    // const markList = markListModel.fetch();
     // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
-    if (version < '0.0.2') {
-        if (version === '0.0.1') {
-            //数据库升级，数据迁移
-            markList.forEach(mark => {
-                mark.createdAt = new Date(2020, 1, 1);
-            });
-            //保存数据
-            window.localStorage.setItem('markList', JSON.stringify(markList));
-        }
-    }
-    window.localStorage.setItem('version', '0.0.2');
+    // if (version < '0.0.2') {
+    //     if (version === '0.0.1') {
+    //         //数据库升级，数据迁移
+    //         markList.forEach(mark => {
+    //             mark.createdAt = new Date(2020, 1, 1);
+    //         });
+    //         //保存数据
+    //         window.localStorage.setItem('markList', JSON.stringify(markList));
+    //     }
+    // }
+    // window.localStorage.setItem('version', '0.0.2');
 
 
     @Component({
@@ -49,7 +47,7 @@
             type: '-',
             sum: 0,
         };
-        markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
+        markList= window.markList
 
 
         onupdateTags(value: string[]) {
@@ -66,12 +64,7 @@
         }
 
         savemark() {
-            markListModel.create(this.mark)
-        }
-
-        @Watch('markList')
-        onMarkListChange() {
-            markListModel.save();
+            window.createMark(this.mark)
         }
     }
 </script>

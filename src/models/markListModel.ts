@@ -8,6 +8,7 @@ const markListModel = {
         const mark2: Mark = clone(mark);
         mark2.createdAt = new Date();
         this.data.push(mark2);
+        this.save()
     },
     fetch() {
         this.data = JSON.parse(window.localStorage.getItem(localStorageName) || '[]') as Mark[];
