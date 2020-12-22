@@ -18,11 +18,12 @@
     import FormItem from '@/components/Money/FormItem.vue';
     import Tags from '@/components/Money/Tags.vue';
     import {Component} from 'vue-property-decorator';
+    import store from '@/store/index2';
 
 
-    // const version = window.localStorage.getItem('version') || '';
+    // const version = store.localStorage.getItem('version') || '';
     // const markList = markListModel.fetch();
-    // const markList: Mark[] = JSON.parse(window.localStorage.getItem('markList') || '[]');
+    // const markList: Mark[] = JSON.parse(store.localStorage.getItem('markList') || '[]');
     // if (version < '0.0.2') {
     //     if (version === '0.0.1') {
     //         //数据库升级，数据迁移
@@ -30,24 +31,24 @@
     //             mark.createdAt = new Date(2020, 1, 1);
     //         });
     //         //保存数据
-    //         window.localStorage.setItem('markList', JSON.stringify(markList));
+    //         store.localStorage.setItem('markList', JSON.stringify(markList));
     //     }
     // }
-    // window.localStorage.setItem('version', '0.0.2');
+    // store.localStorage.setItem('version', '0.0.2');
 
 
     @Component({
         components: {FormItem, Tags, Types, NumberPad}
     })
     export default class Money extends Vue {
-        tags = window.tagList
+        tags = store.tagList
         mark: Mark = {
             tags: [],
             notes: '',
             type: '-',
             sum: 0,
         };
-        markList= window.markList
+        markList= store.markList
 
 
         onupdateTags(value: string[]) {
@@ -64,7 +65,7 @@
         }
 
         savemark() {
-            window.createMark(this.mark)
+            store.createMark(this.mark)
         }
     }
 </script>
