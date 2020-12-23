@@ -1,6 +1,5 @@
 <template>
     <Layout class-prefix="layout">
-        {{markList}}
         <NumberPad :value.sync="mark.sum" @submit="savemark"/>
         <Types :value.sync="mark.type"/>
         <div class="notes">

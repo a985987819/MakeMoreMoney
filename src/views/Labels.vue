@@ -5,7 +5,7 @@
                     class="tag"
                     v-for="tag in tags"
                     :key="tag.id"
-            :to = "`/labels/edit/${tag.id}`"
+                    :to="`/labels/edit/${tag.id}`"
             >
                 <span>{{tag.name}}</span>
                 <Icon name="right"/>
@@ -21,19 +21,28 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
+    import Button from '@/components/Button.vue';
 
-    @Component
+    @Component({
+        components: {Button},
+        computed: {
+            tags() {
+                return this.$store.state.tagList;
+            }
+        }
+    })
     export default class Labels extends Vue {
+        beforeCreate() {
+            this.$store.commit('fetchTags');
+        }
 
-        //TODO
-        // tags = store.tagList
 
         createTag() {
-            const name = window.prompt('请输入标签名');
-            if (name) {
-                //TODO
-                // store.createTag(name)
+            const name = window.prompt('请输入标签名:');
+            if (!name) {
+                return window.alert('标签名不能为空');
             }
+            this.$store.commit('createTag', name);
         }
     }
 </script>
@@ -43,7 +52,8 @@
         background: white;
         font-size: 16px;
         padding-left: 16px;
-        >.tag {
+
+        > .tag {
             min-height: 44px;
             display: flex;
             align-items: center;
