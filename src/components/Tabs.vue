@@ -1,36 +1,44 @@
 <template>
-    <div>
-        <ul class="types">
-            <li :class="{selected:value==='-',[classPrefix+'-item']:classPrefix}"
-                @click="selectType('-')">支出</li>
-            <li :class="{selected:value==='+',[classPrefix+'-item']:classPrefix}"
-                @click="selectType('+')">收入</li>
-        </ul>
-    </div>
+    <ul class="tabs">
+        <li v-for="item in dataSource" :key="item.value"
+            :class="liClass(item)"
+            @click="select(item)"
+        >{{item.text}}
+        </li>
+    </ul>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
     import {Component, Prop} from 'vue-property-decorator';
 
-    @Component
-    //作用：把TS视为组件，会自动把它分类为data和methods
 
-    export default class Types extends Vue {
+    type DataSourceItem = { text: string; value: string }
+    @Component
+    export default class Tabs extends Vue {
+        @Prop({required: true, type: Array})
+        dataSource!: DataSourceItem[];
+
         @Prop(String) value!: string;
         @Prop(String) classPrefix?: string;
-        selectType(type: string) {
-            console.log("当前的type是"+type);
-            if (type !== '-' && type !== '+') {
-                throw new Error('type is unknown');
+
+        liClass(item: DataSourceItem){
+            return {
+                [this.classPrefix+'-tabs-item']:this.classPrefix,
+                selected:item.value == this.value
             }
-            this.$emit('update:value', type);
+        }
+
+
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        select(item: DataSourceItem) {
+            this.$emit('update:value', item.value);
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .types {
+    .tabs {
         background: #b8b8b8;
         display: flex;
         text-align: center;
@@ -55,5 +63,4 @@
             }
         }
     }
-
 </style>
