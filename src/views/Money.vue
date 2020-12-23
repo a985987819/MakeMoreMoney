@@ -6,7 +6,7 @@
         <div class="notes">
             <FormItem @update:value="onupdateNotes" field-name="备注" placeholder="在这里备注"/>
         </div>
-        <Tags :data-source.sync='tags' @update:value="onupdateTags"/>
+        <Tags/>
     </Layout>
 </template>
 
@@ -18,7 +18,6 @@
     import FormItem from '@/components/Money/FormItem.vue';
     import Tags from '@/components/Money/Tags.vue';
     import {Component} from 'vue-property-decorator';
-    import store from '@/store/index2';
 
 
     // const version = store.localStorage.getItem('version') || '';
@@ -38,23 +37,23 @@
 
 
     @Component({
-        components: {FormItem, Tags, Types, NumberPad}
+        components: {FormItem, Tags, Types, NumberPad},
+        computed:{
+            markList(){
+                return this.$store.state.markList
+            }
+        }
     })
     export default class Money extends Vue {
-        tags = store.tagList
         mark: Mark = {
             tags: [],
             notes: '',
             type: '-',
             sum: 0,
         };
-        markList= store.markList
-
-
-        onupdateTags(value: string[]) {
-            this.mark.tags = value;
-            console.log('现在的标签是' + this.mark.tags);
-        }
+created(){
+    this.$store.commit('fetchMarks')
+}
 
         onupdateNotes(value: string) {
             this.mark.notes = value;
@@ -65,7 +64,7 @@
         }
 
         savemark() {
-            store.createMark(this.mark)
+            this.$store.commit('createMark',this.mark)
         }
     }
 </script>
