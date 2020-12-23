@@ -1,7 +1,8 @@
 <template>
     <Layout class-prefix="layout">
         <NumberPad :value.sync="mark.sum" @submit="savemark"/>
-        <Types :value.sync="mark.type"/>
+        <Tabs :data-source="marktypeList"
+        :value.sync="mark.type"/>
         <div class="notes">
             <FormItem @update:value="onupdateNotes" field-name="备注" placeholder="在这里备注"/>
         </div>
@@ -13,10 +14,11 @@
 <script lang="ts">
     import Vue from 'vue';
     import NumberPad from '@/components/Money/NumberPad.vue';
-    import Types from '@/components/Money/Types.vue';
     import FormItem from '@/components/Money/FormItem.vue';
     import Tags from '@/components/Money/Tags.vue';
     import {Component} from 'vue-property-decorator';
+    import Tabs from '@/components/Tabs.vue';
+    import marktypeList from '@/constants/marktypeList';
 
 
     // const version = store.localStorage.getItem('version') || '';
@@ -36,12 +38,14 @@
 
 
     @Component({
-        components: {FormItem, Tags, Types, NumberPad},
+        components: {Tabs, FormItem, Tags, NumberPad},
     })
     export default class Money extends Vue {
-        get markList(){
+        get markList() {
             return this.$store.state.markList;
         }
+
+        marktypeList= marktypeList;
 
         mark: Mark = {
             tags: [],
