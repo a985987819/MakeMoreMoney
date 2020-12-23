@@ -37,22 +37,22 @@
 
     @Component({
         components: {FormItem, Tags, Types, NumberPad},
-        computed:{
-            markList(){
-                return this.$store.state.markList
-            }
-        }
     })
     export default class Money extends Vue {
+        get markList(){
+            return this.$store.state.markList;
+        }
+
         mark: Mark = {
             tags: [],
             notes: '',
             type: '-',
             sum: 0,
         };
-created(){
-    this.$store.commit('fetchMarks')
-}
+
+        created() {
+            this.$store.commit('fetchMarks');
+        }
 
         onupdateNotes(value: string) {
             this.mark.notes = value;
@@ -63,7 +63,7 @@ created(){
         }
 
         savemark() {
-            this.$store.commit('createMark',this.mark)
+            this.$store.commit('createMark', this.mark);
         }
     }
 </script>
@@ -72,7 +72,8 @@ created(){
         display: flex;
         flex-direction: column-reverse;
     }
-    .notes{
+
+    .notes {
         padding: 12px 0;
     }
 </style>
