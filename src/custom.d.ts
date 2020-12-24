@@ -1,9 +1,14 @@
+type RootState = {
+    markList: Mark[],
+    tagList: Tag[],
+    currentTag?: Tag
+}
 type Mark = {
     tags: string[];
     notes: string;
     type: string;
     sum: number;
-    createdAt?: Date;
+    createdAt?: string;
 }
 type Tag = {
     id: string;

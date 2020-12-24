@@ -6,11 +6,7 @@ import router from '@/router';
 
 Vue.use(Vuex);
 
-type RootState = {
-    markList: Mark[],
-    tagList: Tag[],
-    currentTag?: Tag
-}
+
 const store = new Vuex.Store({
     state: {
         markList: [],
@@ -26,7 +22,7 @@ const store = new Vuex.Store({
         },
         createMark(state, mark) {
             const mark2: Mark = clone(mark);
-            mark2.createdAt = new Date();
+            mark2.createdAt = new Date().toISOString();
             state.markList.push(mark2);
             store.commit('saveMarks');
         },

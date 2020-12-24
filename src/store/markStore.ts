@@ -18,7 +18,7 @@ const markStore ={
     },
     createMark(mark: Mark){
         const mark2: Mark = clone(mark);
-        mark2.createdAt = new Date();
+        mark2.createdAt = new Date().toISOString();
         this.markList&&this.markList.push(mark2);
         markStore.saveMarks();
     },

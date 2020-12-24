@@ -30,7 +30,6 @@
             }
         }
 
-
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         select(item: DataSourceItem) {
             this.$emit('update:value', item.value);

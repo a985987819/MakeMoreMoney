@@ -71,7 +71,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .layout-content {
         display: flex;
         flex-direction: column-reverse;
