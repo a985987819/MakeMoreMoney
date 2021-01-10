@@ -1,7 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const path = require('path')
 
 module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+        ? '/MakeMoreMoney-website/'
+        : '/',
+    pwa: {
+        iconPaths: {
+            favicon32: 'favicon.ico',
+            favicon16: 'favicon.ico',
+            appleTouchIcon: 'favicon.ico',
+            maskIcon: 'favicon.ico',
+            msTileImage: 'favicon.ico'
+        }
+    },
+
     lintOnSave: false,
 
     chainWebpack: config => {
@@ -16,10 +29,8 @@ module.exports = {
             .tap(Option => ({
                 ...Option, plugins: [{removeAttrs: {attrs: 'fill'}}]
             })).end()
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'), [{plainSprite: true}])
         config.module.rule('svg').exclude.add(dir)      //其他svg loader排除icons目录
-
 
     }
 }

@@ -1,11 +1,13 @@
 <template>
     <div>
         <label class="formItem">
+            <Icon name="note" class="noteicon"/>
             <span class="name">{{this.fieldName}}</span>
             <input type="text"
                    :value="value"
                    @input="onValueChange($event.target.value)"
                    :placeholder="placeholder">
+            <Icon name="calendar" class="calendar"/>
         </label>
     </div>
 </template>
@@ -28,6 +30,14 @@
 </script>
 
 <style lang="scss" scoped>
+    .noteicon {
+        margin-right: 10px;
+    }
+
+    .calendar {
+        margin-right: 20px;
+    }
+
     .formItem {
         font-size: 14px;
         padding-left: 16px;

@@ -6,32 +6,69 @@ import router from '@/router';
 
 Vue.use(Vuex);
 
-
 const store = new Vuex.Store({
+
     state: {
         markList: [],
         tagList: [],
+        createTagError: null,
         currentTag: undefined
     } as RootState,
+
     mutations: {
         setCurrentTag(state, id: string) {
             state.currentTag = state.tagList.filter(t => t.id === id)[0];
         },
-        fetchMarks(state) {
-            state.markList = JSON.parse(window.localStorage.getItem('markList') || '[]') as Mark[];
+        fetchMarks: function (state) {
+            const markList = JSON.parse(window.localStorage.getItem('markList') || '[]') as Mark[];
+            const arr: any[] = ['奖励'];
+            const earnMark: Mark = {
+                tags: arr,
+                notes: '奖励好好生活的人',
+                type: '+',
+                createdAt:'2021-01-01',
+                sum: 10000
+            };
+            const earnMark2: Mark = {
+                tags: arr,
+                notes: '奖励好好生活的人',
+                type: '+',
+                createdAt:'2020-01-01',
+                sum: 10000
+            };
+            if (!markList || markList.length === 0) {
+                store.commit('createMark', earnMark);
+                store.commit('createMark', earnMark2);
+            }else{
+                state.markList = markList;
+            }
+            return state.markList = markList;
         },
-        createMark(state, mark) {
+        createMark(state, mark: Mark) {
             const mark2: Mark = clone(mark);
-            mark2.createdAt = new Date().toISOString();
+            // mark2.createdAt = new Date().toISOString();
             state.markList.push(mark2);
             store.commit('saveMarks');
+            // window.alert('添加成功');
         },
         saveMarks(state) {
-            window.localStorage.setItem('markList',
-                JSON.stringify(state.markList));
+            window.localStorage.setItem('markList', JSON.stringify(state.markList));
         },
         fetchTags(state) {
             const tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+            // console.log(tagList);
+            if (!tagList || tagList.length === 0) {
+                // console.log("进来了为空的情况");
+                store.commit('createTag', '早餐');
+                store.commit('createTag', '午餐');
+                store.commit('createTag', '奶茶');
+                store.commit('createTag', '买衣服');
+                store.commit('createTag', '压岁钱');
+                store.commit('createTag', '工资');
+            }else{
+                // console.log("进来了不为空的情况");
+                state.tagList = tagList;
+            }
             return state.tagList = tagList;
         },
         createTag(state, name: string) {
@@ -40,16 +77,13 @@ const store = new Vuex.Store({
                 window.alert('标签重复');
             }
             const id = createId().toString();
-            console.log(id);
             state.tagList.push({id, name: name});
             store.commit('saveTags');
-            window.alert('添加成功');
         },
         saveTags(state) {
-            console.log('保存了tag');
             window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
         },
-        updateTag(state, payload: { id: string, name: string }) {
+        updateTag(state, payload: { id: string; name: string }) {
             const {id, name} = payload;
             const idList = state.tagList.map(item => item.id);
             console.log('现在要找的id是' + id);
@@ -58,7 +92,7 @@ const store = new Vuex.Store({
                 console.log('1111,id存在');
                 if (names.indexOf(name) >= 0) {
                     console.log('不能改这个');
-                    alert('标签名重复')
+                    alert('标签名重复');
                 } else {
                     console.log('可以改名');
                     const tag = state.tagList.filter(item => item.id === id)[0];
@@ -67,7 +101,7 @@ const store = new Vuex.Store({
                 }
             }
         },
-        removeTag(state,id: string) {
+        removeTag(state, id: string) {
             let index = -1;
             for (let i = 0; i < state.tagList.length; i++) {
                 if (state.tagList[i].id === id) {
@@ -75,9 +109,9 @@ const store = new Vuex.Store({
                     break;
                 }
             }
-            if (index>=0){
+            if (index >= 0) {
                 state.tagList.splice(index, 1);
-                store.commit('saveTags')
+                store.commit('saveTags');
                 router.back();
             } else {
                 alert('删除失败');

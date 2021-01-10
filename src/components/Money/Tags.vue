@@ -67,7 +67,7 @@
             flex-wrap: wrap;
 
             > li {
-                background: #dcdcdc;
+                background: #f5f5f5;
                 $h: 24px;
                 height: $h;
                 line-height: $h;
@@ -77,7 +77,7 @@
                 margin-top: 4px;
 
                 &.selected {
-                    background: #ff5656;
+                    background: #fdda42;
                     color: #ffffff;
                 }
             }

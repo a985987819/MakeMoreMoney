@@ -1,10 +1,11 @@
 type RootState = {
-    markList: Mark[],
-    tagList: Tag[],
-    currentTag?: Tag
+    markList: Mark[];
+    tagList: Tag[];
+    createTagError: Error | null;
+    currentTag?: Tag;
 }
 type Mark = {
-    tags: string[];
+    tags: Tag[];
     notes: string;
     type: string;
     sum: number;
@@ -12,15 +13,15 @@ type Mark = {
 }
 type Tag = {
     id: string;
-    name: string
+    name: string;
 }
 type TagListModel = {
-    data: Tag[]
-    fetch: () => Tag[]
-    create: (name: string) => 'success' | 'duplicated'    //success表示成功,duplicated表示重复
-    update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
-    save: () => void
-    remove: (id: string) => boolean
+    data: Tag[];
+    fetch: () => Tag[];
+    create: (name: string) => 'success' | 'duplicated';    //success表示成功,duplicated表示重复
+    update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+    save: () => void;
+    remove: (id: string) => boolean;
 }
 
 interface Window {

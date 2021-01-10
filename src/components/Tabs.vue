@@ -23,11 +23,11 @@
         @Prop(String) value!: string;
         @Prop(String) classPrefix?: string;
 
-        liClass(item: DataSourceItem){
+        liClass(item: DataSourceItem) {
             return {
-                [this.classPrefix+'-tabs-item']:this.classPrefix,
-                selected:item.value == this.value
-            }
+                [this.classPrefix + '-tabs-item']: this.classPrefix,
+                selected: item.value == this.value
+            };
         }
 
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -39,12 +39,12 @@
 
 <style lang="scss" scoped>
     .tabs {
-        background: #b8b8b8;
+        background: #fdda42;
         display: flex;
         text-align: center;
         font-size: 24px;
 
-        &-item{
+        &-item {
             width: 50%;
             height: 64px;
             display: flex;
@@ -56,9 +56,9 @@
                 content: '';
                 position: absolute;
                 bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 4px;
+                left: auto;
+                width: 50%;
+                height: 2px;
                 background: #272343;
             }
         }
