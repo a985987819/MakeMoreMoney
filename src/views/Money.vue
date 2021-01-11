@@ -3,7 +3,7 @@
 <template>
     <Layout class-prefix="layout">
         <NumberPad v-if="!isLoading"
-                :value.sync="mark.sum"
+                   :value.sync="mark.sum"
                    :date1.sync="mark.createdAt"
                    @submit="savemark"
                    ref="child1"/>
@@ -37,7 +37,8 @@
         get markList() {
             return this.$store.state.markList;
         }
-        isLoading=false
+
+        isLoading = false;
         now = Date();
         marktypeList = marktypeList;
 
@@ -48,6 +49,7 @@
             sum: 0,
             createdAt: ''
         };
+
         savemark() {
             if (!this.mark.tags || this.mark.tags.length === 0) {
                 window.alert('请选择至少一个标签');
@@ -63,8 +65,8 @@
                 // console.log('----------------下面是子组件');
                 // console.log(this.$refs.child1);
                 // console.log('下面是子组件的clear方法----------------');
-                let a = this.$refs.child1 as any
-                a.clear()
+                let a = this.$refs.child1 as any;
+                a.clear();
                 /* eslint-disable */
                 window.alert('添加成功');
                 return;
@@ -72,8 +74,8 @@
                 this.$store.commit('createMark', this.mark);
                 this.mark.notes = '';
                 window.alert('添加成功');
-                let a = this.$refs.child1 as any
-                a.clear()
+                let a = this.$refs.child1 as any;
+                a.clear();
                 return;
             }
 

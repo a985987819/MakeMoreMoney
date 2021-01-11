@@ -5,7 +5,7 @@
             <li v-for="(group,index) in groupedList" :key="index">
                 <h3 class="title">{{beautify(group.title)}}
                     <span class="total">共￥{{group.total}}</span>
-                    </h3>
+                </h3>
                 <ol>
                     <li v-for="item in group.items" :key="item.id"
                         class="mark">
@@ -26,11 +26,12 @@
 </template>
 
 <style scoped lang="scss">
-    .pitiful{
+    .pitiful {
         min-height: 200px;
         width: 200px;
         margin-top: 100px;
     }
+
     %item {
         padding: 8px 16px;
         line-height: 24px;
@@ -68,19 +69,22 @@
             }
         }
     }
+
     ::v-deep .interval-tabs-item {
         height: 40px;
         font-size: 16px;
     }
-    .total{
+
+    .total {
         font-weight: normal;
         color: #999999;
         font-size: 16px;
     }
-.no-Result{
-    padding: 16px;
-    text-align: center;
-}
+
+    .no-Result {
+        padding: 16px;
+        text-align: center;
+    }
 </style>
 
 <script lang="ts">
@@ -99,11 +103,12 @@
     export default class Statistics extends Vue {
         beforeCreate() {
             this.$store.commit('fetchMarks');
+            console.log('运行了fetchMarks');
         }
 
 
         tagString(tags: Tag[]) {
-            return tags.length === 0 ? '无' : tags.map(t=>t.name).join('，');
+            return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
         }
 
         get markList() {
@@ -132,7 +137,7 @@
             }
             result.map(
                 group => {
-                    group.total = group.items.reduce((sum,item)=>sum+item.sum,0);
+                    group.total = group.items.reduce((sum, item) => sum + item.sum, 0);
                 }
             );
             return result;

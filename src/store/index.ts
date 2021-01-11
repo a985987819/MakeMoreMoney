@@ -20,7 +20,7 @@ const store = new Vuex.Store({
             state.currentTag = state.tagList.filter(t => t.id === id)[0];
         },
         fetchMarks: function (state) {
-            const markList = JSON.parse(window.localStorage.getItem('markList') || '[]') as Mark[];
+            state.markList = JSON.parse(window.localStorage.getItem('markList') || '[]') as Mark[];
             const arr: any[] = ['奖励'];
             const earnMark: Mark = {
                 tags: arr,
@@ -36,13 +36,18 @@ const store = new Vuex.Store({
                 createdAt:'2020-01-01',
                 sum: 10000
             };
-            if (!markList || markList.length === 0) {
+            const spendMark: Mark = {
+                tags: arr,
+                notes: '黄焖鸡',
+                type: '-',
+                createdAt:'2021-01-11',
+                sum: 18
+            };
+            if (!state.markList || state.markList.length === 0) {
                 store.commit('createMark', earnMark);
                 store.commit('createMark', earnMark2);
-            }else{
-                state.markList = markList;
+                store.commit('createMark', spendMark);
             }
-            return state.markList = markList;
         },
         createMark(state, mark: Mark) {
             const mark2: Mark = clone(mark);
@@ -55,21 +60,15 @@ const store = new Vuex.Store({
             window.localStorage.setItem('markList', JSON.stringify(state.markList));
         },
         fetchTags(state) {
-            const tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
-            // console.log(tagList);
-            if (!tagList || tagList.length === 0) {
-                // console.log("进来了为空的情况");
-                store.commit('createTag', '早餐');
-                store.commit('createTag', '午餐');
-                store.commit('createTag', '奶茶');
-                store.commit('createTag', '买衣服');
-                store.commit('createTag', '压岁钱');
-                store.commit('createTag', '工资');
-            }else{
-                // console.log("进来了不为空的情况");
-                state.tagList = tagList;
+            state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+            if(!state.tagList||state.tagList.length === 0){
+                store.commit('createTag','早餐')
+                store.commit('createTag','午餐')
+                store.commit('createTag','奶茶')
+                store.commit('createTag','买衣服')
+                store.commit('createTag','压岁钱')
+                store.commit('createTag','发工资啦')
             }
-            return state.tagList = tagList;
         },
         createTag(state, name: string) {
             const names = state.tagList.map(item => item.name);

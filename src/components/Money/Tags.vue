@@ -29,8 +29,10 @@
         // tagList = store.fetchTags();
         selectedTags: string[] = [];
 
-        created() {
+        beforeCreate() {
             this.$store.commit('fetchTags');
+            console.log('运行了fetchTags');
+            this.$forceUpdate()
         }
 
         toggle(tag: string) {

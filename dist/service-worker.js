@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/MakeMoreMoney-website/precache-manifest.075b0fcd10b8a37a0d424fa1ffddc666.js"
+  "/MakeMoreMoney-website/precache-manifest.b1a7784b565e76fe0af7c66d996cb59d.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "mamo"});
