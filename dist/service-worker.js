@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/egg-accounting-website/precache-manifest.daa50ba84384e313634b8649ffc950e9.js"
+  "/egg-accounting-website/precache-manifest.54f4c6f86453143f40888340bac0ac9a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "mamo"});
