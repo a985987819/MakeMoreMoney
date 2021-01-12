@@ -21,6 +21,7 @@ const store = new Vuex.Store({
         },
         fetchMarks: function (state) {
             state.markList = JSON.parse(window.localStorage.getItem('markList') || '[]') as Mark[];
+
             const arr: any[] = ['奖励'];
             const earnMark: Mark = {
                 tags: arr,
@@ -41,12 +42,20 @@ const store = new Vuex.Store({
                 notes: '黄焖鸡',
                 type: '-',
                 createdAt:'2021-01-11',
-                sum: 18
+                sum: 23
+            };
+            const spendMark2: Mark = {
+                tags: arr,
+                notes: '奶茶',
+                type: '-',
+                createdAt:Date().toString(),
+                sum: 8
             };
             if (!state.markList || state.markList.length === 0) {
                 store.commit('createMark', earnMark);
                 store.commit('createMark', earnMark2);
                 store.commit('createMark', spendMark);
+                store.commit('createMark', spendMark2);
             }
         },
         createMark(state, mark: Mark) {
@@ -85,15 +94,15 @@ const store = new Vuex.Store({
         updateTag(state, payload: { id: string; name: string }) {
             const {id, name} = payload;
             const idList = state.tagList.map(item => item.id);
-            console.log('现在要找的id是' + id);
+            // console.log('现在要找的id是' + id);
             if (idList.indexOf(id) >= 0) {
                 const names = state.tagList.map(item => item.name);
-                console.log('1111,id存在');
+                // console.log('1111,id存在');
                 if (names.indexOf(name) >= 0) {
-                    console.log('不能改这个');
+                    // console.log('不能改这个');
                     alert('标签名重复');
                 } else {
-                    console.log('可以改名');
+                    // console.log('可以改名');
                     const tag = state.tagList.filter(item => item.id === id)[0];
                     tag.name = name;
                     store.commit('saveTags');

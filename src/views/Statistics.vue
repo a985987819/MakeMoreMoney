@@ -8,11 +8,13 @@
                 </h3>
                 <ol>
                     <li v-for="item in group.items" :key="item.id"
-                        class="mark">
+                        class="mark"
+                    >
                         <span>{{tagString(item.tags)}}</span>
-
                         <span class="notes">{{item.notes}}</span>
-                        <span>￥{{item.sum}}</span>
+                        <span>
+                            <span>￥{{item.sum}}</span>
+                        </span>
                     </li>
                 </ol>
             </li>
@@ -50,6 +52,13 @@
         @extend %item
     }
 
+    .mark .dele{
+        display: none;
+        position: fixed;
+        height: 22px;
+        width: 22px;
+        margin-left: -20px;
+    }
     .notes {
         margin-right: auto;
         margin-left: 16px;
@@ -103,9 +112,7 @@
     export default class Statistics extends Vue {
         beforeCreate() {
             this.$store.commit('fetchMarks');
-            console.log('运行了fetchMarks');
         }
-
 
         tagString(tags: Tag[]) {
             return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
@@ -158,8 +165,38 @@
                 return day.format('YYYY年MM月DD日');
             }
         }
-
         type = '-';
         marktypeList = marktypeList;
+
+        //
+        // ToggleDele(e:MouseEvent){
+        //     let ME= e.currentTarget as HTMLElement
+        //     let myself = ME.children[2].children[0] as HTMLElement
+        //     let money = ME.children[2].children[1] as HTMLElement
+        //
+        //     if (!myself.style.display||myself.style.display==='none'){
+        //         myself.style.display='block'
+        //         money.style.display='none'
+        //     }else {
+        //         myself.style.display='none'
+        //         money.style.display='inline'
+        //     }
+        // }
+        // deleteTish(e:MouseEvent){
+        //     e.stopPropagation()
+        //     let ME= e.currentTarget as HTMLElement
+        //     let father = ME.parentElement as HTMLElement
+        //     let grandfather = father.parentElement as HTMLElement
+        //     console.log(grandfather);
+        //
+        //     grandfather.remove()
+        //
+        //     // console.log(this.groupedList[0].items[0]);
+        //     // for (let i=0;i<this.groupedList.length;i++){
+        //     //     for (let j=0;j<this.groupedList[i].length;j++){
+        //     //
+        //     //     }
+        //     // }
+        // }
     }
 </script>

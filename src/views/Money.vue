@@ -50,6 +50,7 @@
             createdAt: ''
         };
 
+
         savemark() {
             if (!this.mark.tags || this.mark.tags.length === 0) {
                 window.alert('请选择至少一个标签');
@@ -78,7 +79,6 @@
                 a.clear();
                 return;
             }
-
         }
     }
 </script>

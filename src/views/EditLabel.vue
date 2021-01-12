@@ -31,7 +31,7 @@
             return this.$store.state.currentTag;
         }
 
-        created() {
+        beforecreated() {
             const id = this.$route.params.id;
             this.$store.commit('fetchTags');
             this.$store.commit('setCurrentTag', id);
@@ -50,12 +50,6 @@
             if (this.currentTag) {
                 this.$store.commit('removeTag', this.currentTag.id);
                 return;
-                //TODO
-                // if (store.removeTag(this.tag.id)) {
-                //     this.$router.back();
-                // } else {
-                //     alert('删除失败');
-                // }
             }
         }
 
